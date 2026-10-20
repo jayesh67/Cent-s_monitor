@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 
 # --- CONFIGURATION ---
 CHECK_URL = "https://testcisia.it/calendario.php?tolc=cents&lingua=inglese"  # Update with your target URL
-KEYWORDS = ["cent-s@home", "dates available", "book now", "prenota"]
+KEYWORDS = ["CENT-S@HOME", "dates available", "book now"]
 
 TELEGRAM_BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN")
 TELEGRAM_CHAT_ID = os.environ.get("TELEGRAM_CHAT_ID")
