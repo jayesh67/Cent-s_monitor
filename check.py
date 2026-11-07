@@ -3,7 +3,13 @@ from bs4 import BeautifulSoup
 
 URL = "https://testcisia.it/calendario.php?tolc=cents&l=gb&lingua=inglese"
 STATE = "state.json"
-FMT = os.environ.get("FORMAT_FILTER", "").strip().lower()
+
+def env_list(name):
+    return [x.strip().lower() for x in os.environ.get(name, "").split(",") if x.strip()]
+
+FORMATS = env_list("FORMAT_FILTER")          # e.g. "home,casa"; empty = all formats
+UNIS = env_list("UNI_FILTER")                # e.g. "sapienza,padova"; empty = all
+DATE_PART = os.environ.get("DATE_FILTER", "").strip()   # e.g. "/12/2026"; empty = all dates
 
 def notify(msg):
     r = requests.post(
@@ -12,6 +18,14 @@ def notify(msg):
         timeout=20,
     )
     r.raise_for_status()
+
+def describe(r):
+    return (f"Format: {r['format']}\n"
+            f"University: {r['uni']} ({r['city']})\n"
+            f"Test date: {r['date']}\n"
+            f"Booking deadline: {r['deadline']} (2 PM CET)\n"
+            f"Seats: {r.get('seats', '-')}\n"
+            f"Status: {r['state']}")
 
 resp = requests.get(URL, timeout=30, headers={"User-Agent": "Mozilla/5.0"})
 resp.raise_for_status()
@@ -23,11 +37,20 @@ for tr in soup.select("table tr"):
     if len(tds) < 8:
         continue
     fmt, uni, region, city, deadline, seats, state, date = tds[:8]
-    if not date.endswith("/12/2026"):      # December only
+    if FORMATS and not any(f in fmt.lower() for f in FORMATS):
         continue
-    if FMT and FMT not in fmt.lower():
+    if UNIS and not any(u in uni.lower() for u in UNIS):
         continue
-    rows[f"{fmt} | {uni} | {date}"] = {"deadline": deadline, "state": state}
+    if DATE_PART and DATE_PART not in date:
+        continue
+    rows[f"{fmt} | {uni} | {date}"] = {
+        "format": fmt, "uni": uni, "city": city, "date": date,
+        "deadline": deadline, "state": state, "seats": seats,
+    }
+
+# Seats change constantly, so they are shown in alerts but not saved or compared.
+saved = {k: {x: v[x] for x in ("format", "uni", "city", "date", "deadline", "state")}
+         for k, v in rows.items()}
 
 old = json.load(open(STATE)) if os.path.exists(STATE) else None
 if old is None:
@@ -36,21 +59,18 @@ else:
     msgs = []
     for k, v in rows.items():
         if k not in old:
-            msgs.append(f"NEW: {k}\n   deadline {v['deadline']}, {v['state']}")
+            msgs.append("NEW DATE\n" + describe(v))
         elif old[k]["state"] != v["state"]:
-            msgs.append(f"CHANGED: {k}\n   {old[k]['state']} -> {v['state']}")
+            msgs.append(f"STATUS CHANGED: {old[k]['state']} -> {v['state']}\n" + describe(v))
     for k in old:
         if k not in rows:
-            msgs.append(f"REMOVED: {k}")
+            msgs.append("REMOVED\n" + describe(old[k]))
     if msgs:
-        notify("CEnT-S December update\n\n" + "\n\n".join(msgs) + f"\n\n{URL}")
+        notify("CEnT-S calendar update\n\n" + "\n\n".join(msgs) + f"\n\n{URL}")
     else:
         print("No change.")
 
-json.dump(rows, open(STATE, "w"), ensure_ascii=False, indent=1, sort_keys=True)
-
-
-
+json.dump(saved, open(STATE, "w"), ensure_ascii=False, indent=1, sort_keys=True)
 
 
 
