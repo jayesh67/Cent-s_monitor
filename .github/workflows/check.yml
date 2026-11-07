@@ -22,7 +22,9 @@ jobs:
       - run: pip install requests beautifulsoup4
       - run: python check.py
         env:
-          FORMAT_FILTER: ""   # change to "" to watch @UNI too
+          FORMAT_FILTER: "home,casa"   # @HOME and @CASA only, no @UNI
+          UNI_FILTER: ""               # every university
+          DATE_FILTER: "/12/2026"      # December only
           TG_TOKEN: ${{ secrets.TG_TOKEN }}
           TG_CHAT: ${{ secrets.TG_CHAT }}
       - name: Save state
