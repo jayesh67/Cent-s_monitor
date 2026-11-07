@@ -22,7 +22,7 @@ jobs:
       - run: pip install requests beautifulsoup4
       - run: python check.py
         env:
-          FORMAT_FILTER: "CENT@HOME"   # change to "" to watch @UNI too
+          FORMAT_FILTER: ""   # change to "" to watch @UNI too
           TG_TOKEN: ${{ secrets.TG_TOKEN }}
           TG_CHAT: ${{ secrets.TG_CHAT }}
       - name: Save state
