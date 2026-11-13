@@ -24,7 +24,7 @@ jobs:
         env:
           FORMAT_FILTER: "home,casa"   # @HOME and @CASA only, no @UNI
           UNI_FILTER: ""               # every university
-          DATE_FILTER: "/12/2026"      # December only
+          DATE_FILTER: ""      # December only
           TG_TOKEN: ${{ secrets.TG_TOKEN }}
           TG_CHAT: ${{ secrets.TG_CHAT }}
       - name: Save state
