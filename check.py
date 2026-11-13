@@ -1,5 +1,5 @@
-from datetime import datetime, timezone, timedelta
 import os, json, requests
+from datetime import datetime, timezone, timedelta
 from bs4 import BeautifulSoup
 
 URL = "https://testcisia.it/calendario.php?tolc=cents&l=gb&lingua=inglese"
@@ -8,9 +8,9 @@ STATE = "state.json"
 def env_list(name):
     return [x.strip().lower() for x in os.environ.get(name, "").split(",") if x.strip()]
 
-FORMATS = env_list("FORMAT_FILTER")          # e.g. "home,casa"; empty = all formats
-UNIS = env_list("UNI_FILTER")                # e.g. "sapienza,padova"; empty = all
-DATE_PART = os.environ.get("DATE_FILTER", "").strip()   # e.g. "/12/2026"; empty = all dates
+FORMATS = env_list("FORMAT_FILTER")
+UNIS = env_list("UNI_FILTER")
+DATE_PART = os.environ.get("DATE_FILTER", "").strip()
 
 def notify(msg):
     r = requests.post(
@@ -30,7 +30,7 @@ def describe(r):
             f"Format: {r['format']}\n"
             f"University: {r['uni']} ({r['city']})\n"
             f"Test date: {r['date']}\n"
-            f"Booking deadline: {r['deadline']} (2 PM CET)\n"
+            f"Booking deadline: {r['deadline']} (2 PM CET = 6:30 PM IST)\n"
             f"Seats: {r.get('seats', '-')}\n"
             f"Status: {r['state']}")
 
@@ -55,7 +55,6 @@ for tr in soup.select("table tr"):
         "deadline": deadline, "state": state, "seats": seats,
     }
 
-# Seats change constantly, so they are shown in alerts but not saved or compared.
 saved = {k: {x: v[x] for x in ("format", "uni", "city", "date", "deadline", "state")}
          for k, v in rows.items()}
 
@@ -78,7 +77,5 @@ else:
     else:
         print("No change.")
 
-json.dump(saved, open(STATE, "w"), ensure_ascii=False, indent=1, sort_keys=True)
-
-
+json.dump(saved, open(STATE, "w"), ensure_ascii=False,
 
