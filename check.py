@@ -77,5 +77,5 @@ else:
     else:
         print("No change.")
 
-json.dump(saved, open(STATE, "w"), ensure_ascii=False,
+json.dump(saved, open(STATE, "w"), ensure_ascii=False, indent=1, sort_keys=True)
 
