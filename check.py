@@ -1,3 +1,4 @@
+from datetime import datetime, timezone, timedelta
 import os, json, requests
 from bs4 import BeautifulSoup
 
@@ -19,8 +20,14 @@ def notify(msg):
     )
     r.raise_for_status()
 
+def is_open(state):
+    s = state.lower()
+    return "available" in s and "not longer" not in s
+
 def describe(r):
-    return (f"Format: {r['format']}\n"
+    flag = "🟢 BOOKABLE NOW" if is_open(r["state"]) else "🔴 CLOSED / SOLD OUT"
+    return (f"{flag}\n"
+            f"Format: {r['format']}\n"
             f"University: {r['uni']} ({r['city']})\n"
             f"Test date: {r['date']}\n"
             f"Booking deadline: {r['deadline']} (2 PM CET)\n"
@@ -66,7 +73,8 @@ else:
         if k not in rows:
             msgs.append("REMOVED\n" + describe(old[k]))
     if msgs:
-        notify("CEnT-S calendar update\n\n" + "\n\n".join(msgs) + f"\n\n{URL}")
+        ist = datetime.now(timezone(timedelta(hours=5, minutes=30))).strftime("%d %b %H:%M IST")
+        notify("CEnT-S calendar update\n\n" + "\n\n".join(msgs) + f"\n\nChecked at {ist}\n{URL}")
     else:
         print("No change.")
 
