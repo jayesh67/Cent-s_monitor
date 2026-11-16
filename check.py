@@ -13,12 +13,19 @@ UNIS = env_list("UNI_FILTER")
 DATE_PART = os.environ.get("DATE_FILTER", "").strip()
 
 def notify(msg):
-    r = requests.post(
-        f"https://api.telegram.org/bot{os.environ['TG_TOKEN']}/sendMessage",
-        data={"chat_id": os.environ["TG_CHAT"], "text": msg[:4000]},
-        timeout=20,
-    )
-    r.raise_for_status()
+    for chat in os.environ["TG_CHAT"].split(","):
+        chat = chat.strip()
+        if not chat:
+            continue
+        try:
+            r = requests.post(
+                f"https://api.telegram.org/bot{os.environ['TG_TOKEN']}/sendMessage",
+                data={"chat_id": chat, "text": msg[:4000]},
+                timeout=20,
+            )
+            r.raise_for_status()
+        except Exception as e:
+            print(f"Failed to send to {chat}: {e}")
 
 def is_open(state):
     s = state.lower()
