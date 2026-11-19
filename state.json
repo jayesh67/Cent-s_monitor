@@ -54,5 +54,37 @@
   "format": "CENT@HOME",
   "state": "NOT LONGER AVAILABLE",
   "uni": "Università degli studi di Teramo"
+ },
+ "CENT@UNI | Politecnico di Torino | 12/01/2027": {
+  "city": "TORINO",
+  "date": "12/01/2027",
+  "deadline": "06/01/2027",
+  "format": "CENT@UNI",
+  "state": "NOT LONGER AVAILABLE",
+  "uni": "Politecnico di Torino"
+ },
+ "CENT@UNI | Universita' degli studi di Messina | 17/12/2026": {
+  "city": "MESSINA",
+  "date": "17/12/2026",
+  "deadline": "11/12/2026",
+  "format": "CENT@UNI",
+  "state": "AVAILABLE SEATS",
+  "uni": "Universita' degli studi di Messina"
+ },
+ "CENT@UNI | Universita' degli studi di Messina | 26/11/2026": {
+  "city": "MESSINA",
+  "date": "26/11/2026",
+  "deadline": "20/11/2026",
+  "format": "CENT@UNI",
+  "state": "AVAILABLE SEATS",
+  "uni": "Universita' degli studi di Messina"
+ },
+ "CENT@UNI | Universita' degli studi di Trieste | 26/11/2026": {
+  "city": "TRIESTE",
+  "date": "26/11/2026",
+  "deadline": "20/11/2026",
+  "format": "CENT@UNI",
+  "state": "AVAILABLE SEATS",
+  "uni": "Universita' degli studi di Trieste"
  }
 }
