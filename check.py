@@ -31,25 +31,6 @@ def is_open(state):
     s = state.lower()
     return "available" in s and "not longer" not in s
     
-def phone_call():
-    topic = os.environ.get("NTFY_TOPIC")
-    if not topic:
-        return
-    try:
-        requests.post(
-            f"https://ntfy.sh/{topic}",
-            data="A CEnT-S seat is BOOKABLE NOW. Tap to open CISIA.".encode("utf-8"),
-            headers={
-                "Title": "CEnT-S SEAT OPEN",
-                "Priority": "urgent",
-                "Tags": "rotating_light",
-                "Click": "https://testcisia.it/studenti_tolc/login_sso.php",
-            },
-            timeout=20,
-        ).raise_for_status()
-    except Exception as e:
-        print("ntfy failed:", e)
-
 def describe(r):
     flag = "🟢 BOOKABLE NOW" if is_open(r["state"]) else "🔴 CLOSED / SOLD OUT"
     return (f"{flag}\n"
