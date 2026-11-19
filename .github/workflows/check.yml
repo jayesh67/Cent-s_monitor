@@ -26,6 +26,7 @@ jobs:
           UNI_FILTER: ""               # every university
           DATE_FILTER: ""              # every month
           TG_TOKEN: ${{ secrets.TG_TOKEN }}
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}          
           TG_CHAT: ${{ secrets.TG_CHAT }}
       - name: Save state
         run: |
