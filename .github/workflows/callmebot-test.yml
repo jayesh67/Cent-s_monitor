@@ -1,0 +1,18 @@
+name: callmebot-test
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Try CallMeBot
+        env:
+          CB_USER: ${{ secrets.CALLMEBOT_USER }}
+        run: |
+          curl -sS -m 30 -G "https://api.callmebot.com/start.php" \
+            --data-urlencode "user=$CB_USER" \
+            --data-urlencode "text=Test call from GitHub" \
+            --data-urlencode "lang=en-GB-Standard-B" \
+            --data-urlencode "rpt=2" \
+            -w "\nHTTP status: %{http_code}\n"
