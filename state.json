@@ -12,7 +12,7 @@
   "date": "26/11/2026",
   "deadline": "20/11/2026",
   "format": "CENT@HOME",
-  "state": "NOT LONGER AVAILABLE",
+  "state": "BOOKINGS CLOSED",
   "uni": "Politecnico di Milano"
  },
  "CENT@HOME | Sapienza Università di Roma | 17/12/2026": {
@@ -28,7 +28,7 @@
   "date": "26/11/2026",
   "deadline": "20/11/2026",
   "format": "CENT@HOME",
-  "state": "NOT LONGER AVAILABLE",
+  "state": "BOOKINGS CLOSED",
   "uni": "Sapienza Università di Roma"
  },
  "CENT@HOME | Università Ca' Foscari Venezia | 26/11/2026": {
@@ -36,7 +36,7 @@
   "date": "26/11/2026",
   "deadline": "20/11/2026",
   "format": "CENT@HOME",
-  "state": "NOT LONGER AVAILABLE",
+  "state": "BOOKINGS CLOSED",
   "uni": "Università Ca' Foscari Venezia"
  },
  "CENT@HOME | Università degli studi di Padova | 26/11/2026": {
@@ -44,7 +44,7 @@
   "date": "26/11/2026",
   "deadline": "20/11/2026",
   "format": "CENT@HOME",
-  "state": "NOT LONGER AVAILABLE",
+  "state": "BOOKINGS CLOSED",
   "uni": "Università degli studi di Padova"
  },
  "CENT@HOME | Università degli studi di Teramo | 26/11/2026": {
@@ -52,7 +52,7 @@
   "date": "26/11/2026",
   "deadline": "20/11/2026",
   "format": "CENT@HOME",
-  "state": "NOT LONGER AVAILABLE",
+  "state": "BOOKINGS CLOSED",
   "uni": "Università degli studi di Teramo"
  }
 }
