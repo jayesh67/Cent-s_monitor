@@ -15,6 +15,14 @@
   "state": "BOOKINGS CLOSED",
   "uni": "Politecnico di Milano"
  },
+ "CENT@HOME | Sapienza Università di Roma | 12/01/2027": {
+  "city": "ROMA",
+  "date": "12/01/2027",
+  "deadline": "06/01/2027",
+  "format": "CENT@HOME",
+  "state": "AVAILABLE SEATS",
+  "uni": "Sapienza Università di Roma"
+ },
  "CENT@HOME | Sapienza Università di Roma | 17/12/2026": {
   "city": "ROMA",
   "date": "17/12/2026",
